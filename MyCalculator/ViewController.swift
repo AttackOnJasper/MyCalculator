@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     var displayValue: Double!  // display value in double type
     
     /*
-     * true if the display will be reset next time
+     * true if the display will be reset to 0.0 next time
      * false otherwise
      */
     var reset = false
@@ -40,11 +40,8 @@ class ViewController: UIViewController {
         }
         if sender.currentTitle == "."{
             var validInsert = true
-            for char in display.text!{
-                if (char == "."){
-                    validInsert = false
-                }
-                
+            if display.text?.rangeOfString(".") != nil {
+                validInsert = false
             }
             if validInsert{
                 display.text = display.text! + "."
@@ -72,7 +69,7 @@ class ViewController: UIViewController {
                 myOperator = operation
                 displayValue = NSNumberFormatter().numberFromString(display.text!)!.doubleValue
                 result = displayValue
-                println(displayValue)
+                //println(displayValue)
                 reset = true
                 return;
             }
@@ -91,7 +88,7 @@ class ViewController: UIViewController {
                 displayValue = tempValue * result
             case "÷":
                 if (display.text == "0.0" || display.text == "0"){
-                    println("not acceptable")
+                    print("not acceptable")
                     display.text = "N/A"
                     reset = true
                     return;
@@ -124,7 +121,7 @@ class ViewController: UIViewController {
             displayValue = displayValue * result
         case "÷":
             if (display.text == "0" || display.text == "0.0"){
-                println("not acceptable")
+                print("not acceptable")
                 display.text = "N/A"
                 reset = true
                 return;
@@ -157,13 +154,11 @@ class ViewController: UIViewController {
     
     @IBAction func AddMemory(sender: UIButton) {
         memory = displayValue
-        reset = true
     }
     
     @IBAction func UseMemory(sender: UIButton) {
         displayValue = memory
         display.text = "\(displayValue)"
-        reset = true
     }
     
     
